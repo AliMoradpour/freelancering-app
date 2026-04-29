@@ -10,16 +10,22 @@ const SendOTPForm = ({}: Props) => {
     setPhoneNumber(event?.target?.value);
   };
 
+  const sendOTPHandler = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
-      <form className="space-y-10">
+      <form className="space-y-10" onSubmit={sendOTPHandler}>
         <TextField
           label="شماره موبایل"
           name="phoneNumber"
           value={phoneNumber}
           onChange={changeHandler}
         />
-        <button className="btn btn--primary w-full">ارسال کد تایید</button>
+        <button type="submit" className="btn btn--primary w-full">
+          ارسال کد تایید
+        </button>
       </form>
     </div>
   );
