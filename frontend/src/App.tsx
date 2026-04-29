@@ -1,14 +1,13 @@
 import { Route, Routes } from "react-router-dom";
-import { Fragment } from "react/jsx-runtime";
 import Auth from "./pages/Auth";
 
 function App() {
   return (
-    <Fragment>
+    <main className="container xl:max-w-xl mx-auto">
       <Routes>
         <Route path="/auth" element={<Auth />} />
       </Routes>
-    </Fragment>
+    </main>
   );
 }
 
