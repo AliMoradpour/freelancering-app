@@ -4,7 +4,7 @@ type Props = {};
 
 const SendOTPForm = ({}: Props) => {
 
-  const [phoneNumber, setPhoneNumber] = useState<String>('')
+  const [phoneNumber, setPhoneNumber] = useState<stringtring>('')
 
   return (
     <div>
