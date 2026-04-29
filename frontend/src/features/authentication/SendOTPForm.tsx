@@ -1,9 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import TextField from "../../ui/TextField";
 
-type Props = {};
-
-const SendOTPForm = ({}: Props) => {
+const SendOTPForm = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
