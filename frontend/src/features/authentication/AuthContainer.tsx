@@ -1,0 +1,18 @@
+import { useState } from "react";
+import CheckOTPForm from "./CheckOTPForm";
+import SendOTPForm from "./SendOTPForm";
+
+const AuthContainer = () => {
+  const [step, setStep] = useState(1);
+
+  switch (step) {
+    case 1:
+      return <SendOTPForm setStep={setStep} />;
+    case 2:
+      return <CheckOTPForm />;
+    default:
+      return null;
+  }
+};
+
+export default AuthContainer;

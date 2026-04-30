@@ -1,14 +1,12 @@
-import CheckOTPForm from "../features/authentication/CheckOTPForm";
-import SendOTPForm from "../features/authentication/SendOTPForm";
+import AuthContainer from "../features/authentication/AuthContainer";
 
 type Props = {};
 
 function Auth({}: Props) {
   return (
     <div className="flex justify-center pt-20">
-      <div className="sm:max-w-sm">
-        <SendOTPForm />
-        <CheckOTPForm />
+      <div className="max-w-sm">
+        <AuthContainer />
       </div>
     </div>
   );

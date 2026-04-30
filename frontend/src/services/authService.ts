@@ -4,7 +4,7 @@ type getOtpPayload = {
   phoneNumber: string;
 };
 export function getOTP(payload: getOtpPayload) {
-  return http.post("/user/get-otp", payload);
+  return http.post("/user/get-otp", payload).then(({ data }) => data?.data);
 }
 
 type checkOtpPayload = {
