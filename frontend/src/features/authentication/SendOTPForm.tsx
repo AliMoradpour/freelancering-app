@@ -1,5 +1,4 @@
 import {
-  useState,
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
@@ -10,14 +9,18 @@ import { getOTP } from "../../services/authService";
 import toast from "react-hot-toast";
 import Loading from "../../ui/Loading";
 
+type SendOTPFormProps = {
+  setStep: Dispatch<SetStateAction<number>>;
+  phoneNumber: string;
+  setPhoneNumber: Dispatch<SetStateAction<string>>;
+};
+
 const SendOTPForm = ({
   setStep,
-}: {
-  setStep: Dispatch<SetStateAction<number>>;
-}) => {
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-
-  const { isPending, error, data, mutateAsync } = useMutation({
+  phoneNumber,
+  setPhoneNumber,
+}: SendOTPFormProps) => {
+  const { isPending, mutateAsync } = useMutation({
     mutationFn: getOTP,
   });
 
@@ -32,8 +35,8 @@ const SendOTPForm = ({
       const data = await mutateAsync({ phoneNumber });
       toast.success(data.message);
       setStep(2);
-    } catch (err: { message: string }) {
-      toast.error(err?.message);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
     }
   };
 
