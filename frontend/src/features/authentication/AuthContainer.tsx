@@ -9,7 +9,7 @@ const AuthContainer = () => {
   const [step, setStep] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
-  const { isPending, mutateAsync } = useMutation({
+  const { isPending, data, mutateAsync } = useMutation({
     mutationFn: getOTP,
   });
   const sendOTPHandler = async (event: { preventDefault: () => void }) => {
@@ -40,6 +40,7 @@ const AuthContainer = () => {
           phoneNumber={phoneNumber}
           onMoveBack={() => setStep((s) => s - 1)}
           reSendOTP={sendOTPHandler}
+          otpResponse={data}
         />
       );
     default:

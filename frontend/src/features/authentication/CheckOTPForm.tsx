@@ -6,11 +6,18 @@ import toast from "react-hot-toast";
 import Loading from "../../ui/Loading";
 import { useNavigate } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
+import { CiEdit } from "react-icons/ci";
+
+interface OtpResponse {
+  phoneNumber: string;
+  message: string;
+}
 
 type CheckOTPFormProps = {
   phoneNumber: string;
   onMoveBack: () => void;
   reSendOTP: (event: { preventDefault: () => void }) => void;
+  otpResponse: OtpResponse | null | undefined;
 };
 
 const RESEND_TIME = 90;
@@ -19,6 +26,7 @@ const CheckOTPForm = ({
   phoneNumber,
   onMoveBack,
   reSendOTP,
+  otpResponse,
 }: CheckOTPFormProps) => {
   const navigate = useNavigate();
 
@@ -46,6 +54,7 @@ const CheckOTPForm = ({
     }
   };
 
+  // timer effect
   useEffect(() => {
     const time =
       timer > 0 &&
@@ -64,6 +73,16 @@ const CheckOTPForm = ({
         <HiArrowRight className="w-5 text-secondary-900" />
         بازگشت
       </button>
+      {otpResponse && (
+        <div className="flex items-center gap-2">
+          <p className="text-secondary-500">
+            کد برای {otpResponse?.phoneNumber} ارسال شد
+          </p>
+          <button onClick={onMoveBack}>
+            <CiEdit />
+          </button>
+        </div>
+      )}
       <form className="space-y-10" onSubmit={checkOTPHandler}>
         <h3 className="font-bold text-secondary-800">کد تایید را وارد کنید</h3>
         <OTPInput
