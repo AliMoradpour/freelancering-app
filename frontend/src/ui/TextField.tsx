@@ -10,7 +10,7 @@ type Props = {
 const TextField = ({ label, name, value, onChange }: Props) => {
   return (
     <div>
-      <label htmlFor={name} className="text-secondary-900 mb-1">
+      <label htmlFor={name} className="text-secondary-900">
         {label}
       </label>
       <input
@@ -18,7 +18,7 @@ const TextField = ({ label, name, value, onChange }: Props) => {
         name={name}
         value={value}
         onChange={onChange}
-        className="textField__input"
+        className="textField__input mt-3"
         type="text"
       />
     </div>
