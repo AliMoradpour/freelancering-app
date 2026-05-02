@@ -1,16 +1,35 @@
 import { useState } from "react";
 import TextField from "../../ui/TextField";
 import RadioInput from "../../ui/RadioInput";
+import { useMutation } from "@tanstack/react-query";
+import { completeProfile } from "../../services/authService";
+import toast from "react-hot-toast";
+import Loading from "../../ui/Loading";
 
 const CompleteProfileForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: completeProfile,
+  });
+
+  const submitHandler = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    try {
+      const { user, message } = await mutateAsync({ name, email, role });
+      toast.success(message);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
+    }
+  };
 
   return (
     <div className="w-full max-w-sm pt-20">
       <h2 className="font-black text-lg mb-8">اطلاعات خود را تکمیل کنید</h2>
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={submitHandler}>
         <TextField
           label="نام و نام خانوادگی"
           name="name"
@@ -29,6 +48,7 @@ const CompleteProfileForm = () => {
             label="کارفرما"
             name="role"
             value="OWNER"
+            id="OWNER"
             onChange={(e) => setRole(e?.target.value)}
             checked={role === "OWNER"}
           />
@@ -36,13 +56,17 @@ const CompleteProfileForm = () => {
             label="فریلنسر"
             name="role"
             value="FREELANCER"
+            id="FREELANCER"
             onChange={(e) => setRole(e?.target.value)}
             checked={role === "FREELANCER"}
-
           />
         </div>
 
-        <button className="btn btn--primary w-full">تکمیل فرم</button>
+        {isPending ? (
+          <Loading />
+        ) : (
+          <button className="btn btn--primary w-full">تکمیل فرم</button>
+        )}
       </form>
     </div>
   );

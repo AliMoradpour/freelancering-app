@@ -7,18 +7,9 @@ import Loading from "../../ui/Loading";
 import { useNavigate } from "react-router-dom";
 import { HiArrowRight } from "react-icons/hi";
 import { CiEdit } from "react-icons/ci";
+import type { CheckOTPFormProps } from "../../types/authTypes";
 
-interface OtpResponse {
-  phoneNumber: string;
-  message: string;
-}
 
-type CheckOTPFormProps = {
-  phoneNumber: string;
-  onMoveBack: () => void;
-  reSendOTP: (event: { preventDefault: () => void }) => void;
-  otpResponse: OtpResponse | null | undefined;
-};
 
 const RESEND_TIME = 90;
 

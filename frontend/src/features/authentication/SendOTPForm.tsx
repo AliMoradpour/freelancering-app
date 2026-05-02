@@ -1,13 +1,7 @@
-import { type ChangeEvent, type Dispatch, type SetStateAction } from "react";
+import { type ChangeEvent } from "react";
 import TextField from "../../ui/TextField";
 import Loading from "../../ui/Loading";
-
-type SendOTPFormProps = {
-  phoneNumber: string;
-  setPhoneNumber: Dispatch<SetStateAction<string>>;
-  onSubmit: (event: { preventDefault: () => void }) => void;
-  isSendingOTP: boolean;
-};
+import type { SendOTPFormProps } from "../../types/authTypes";
 
 const SendOTPForm = ({
   phoneNumber,
