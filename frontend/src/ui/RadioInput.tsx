@@ -1,20 +1,28 @@
+import type { ChangeEventHandler } from "react";
+
 type Props = {
   label: string;
   value: string;
   name: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  checked: boolean;
 };
 
-const RadioInput = ({ label, value, name }: Props) => {
+const RadioInput = ({ label, value, name, onChange, checked }: Props) => {
   return (
-    <div className="flex flex-row-reverse items-center gap-x-2">
-      <label htmlFor={value}>{label}</label>
+    <div className="flex items-center gap-x-2">
       <input
         type="radio"
         name={name}
         id={value}
         value={value}
-        className="w-4 h-4 accent-primary-900"
+        className="w-4 h-4 accent-primary-900 cursor-pointer"
+        onChange={onChange}
+        checked={checked}
       />
+      <label htmlFor={value} className="text-secondary-900">
+        {label}
+      </label>
     </div>
   );
 };
