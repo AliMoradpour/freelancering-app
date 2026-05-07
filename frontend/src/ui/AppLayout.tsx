@@ -8,7 +8,7 @@ function AppLayout() {
       <Header />
       <Sidebar />
       <div className="bg-secondary-100 p-8 overflow-y-auto">
-        <div className="mx-auto max-w-3xl flex flex-col gap-y-10">
+        <div className="mx-auto max-w-6xl flex flex-col gap-y-10">
           <Outlet />
         </div>
       </div>
