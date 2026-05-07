@@ -57,7 +57,7 @@ class userAuthController extends Controller {
 
     const user = await UserModel.findOne(
       { phoneNumber },
-      { password: 0, refreshToken: 0, accessToken: 0 }
+      { password: 0, refreshToken: 0, accessToken: 0 },
     );
 
     if (!user) throw createError.NotFound("کاربری با این مشخصات یافت نشد");
@@ -74,7 +74,7 @@ class userAuthController extends Controller {
     // await setAuthCookie(res, user); // set httpOnly cookie
     await setAccessToken(res, user);
     await setRefreshToken(res, user);
-    let WELLCOME_MESSAGE = `کد تایید شد، به فرانت هوکس خوش آمدید`;
+    let WELLCOME_MESSAGE = `کد تایید شد، به فریلنسرآباد خوش آمدید`;
     if (!user.isActive)
       WELLCOME_MESSAGE = `کد تایید شد، لطفا اطلاعات خود را تکمیل کنید`;
 
@@ -112,7 +112,7 @@ class userAuthController extends Controller {
     });
     const updatedResult = await UserModel.updateOne(
       { phoneNumber },
-      { $set: objectData }
+      { $set: objectData },
     );
     return !!updatedResult.modifiedCount;
   }
@@ -134,7 +134,7 @@ class userAuthController extends Controller {
             statusCode: HttpStatus.OK,
             data: {
               message: `کد تائید برای شماره موبایل ${toPersianDigits(
-                phoneNumber
+                phoneNumber,
               )} ارسال گردید`,
               expiresIn: CODE_EXPIRES,
               phoneNumber,
@@ -145,7 +145,7 @@ class userAuthController extends Controller {
           statusCode: status,
           message: "کد اعتبارسنجی ارسال نشد",
         });
-      }
+      },
     );
   }
   async completeProfile(req, res) {
@@ -160,13 +160,13 @@ class userAuthController extends Controller {
     console.log(duplicateUser);
     if (duplicateUser)
       throw createError.BadRequest(
-        "کاربری با این ایمیل قبلا ثبت نام کرده است."
+        "کاربری با این ایمیل قبلا ثبت نام کرده است.",
       );
 
     const updatedUser = await UserModel.findOneAndUpdate(
       { _id: user._id },
       { $set: { name, email, isActive: true, role } },
-      { new: true }
+      { new: true },
     );
     // await setAuthCookie(res, updatedUser);
     await setAccessToken(res, updatedUser);
@@ -189,7 +189,7 @@ class userAuthController extends Controller {
       { _id: userId },
       {
         $set: { name, email, biography, phoneNumber },
-      }
+      },
     );
     if (!updateResult.modifiedCount === 0)
       throw createError.BadRequest("اطلاعات ویرایش نشد");
