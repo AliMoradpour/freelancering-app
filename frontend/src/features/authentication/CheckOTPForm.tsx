@@ -9,8 +9,6 @@ import { HiArrowRight } from "react-icons/hi";
 import { CiEdit } from "react-icons/ci";
 import type { CheckOTPFormProps } from "../../types/authTypes";
 
-
-
 const RESEND_TIME = 90;
 
 const CheckOTPForm = ({
@@ -35,14 +33,14 @@ const CheckOTPForm = ({
       const { user, message } = await mutateAsync({ phoneNumber, otp });
       toast.success(message);
 
-      if(!user.isActive) return navigate('/complete-profile')
-      if(user.status !== 2) {
-        navigate('/')
-        toast('پروفایل شما در انتظار تایید است', {icon: '👏'})
-        return
+      if (!user.isActive) return navigate("/complete-profile");
+      if (user.status !== 2) {
+        navigate("/");
+        toast("پروفایل شما در انتظار تایید است", { icon: "👏" });
+        return;
       }
-      if(user.role == "OWNER") return navigate('/owner')
-      if(user.role == "FREELANCER") return navigate('/freelancer')
+      if (user.role == "OWNER") return navigate("/owner");
+      if (user.role == "FREELANCER") return navigate("/freelancer");
     } catch (err: any) {
       toast.error(err?.response?.data?.message);
     }
