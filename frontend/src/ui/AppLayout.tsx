@@ -1,17 +1,19 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 function AppLayout() {
   return (
     <div className="h-screen grid grid-rows-[auto_1fr] grid-cols-[15rem_1fr]">
-     <div className="bg-secondary-0 py-4 px-8">header</div>
-     <div className="bg-secondary-0 row-start-1 row-span-2">sidebar</div>
-     <div className="bg-secondary-100 p-8 overflow-y-auto">
-      <div className="mx-auto max-w-3xl bg-red-400">
-       <Outlet />
+      <Header />
+      <Sidebar />
+      <div className="bg-secondary-100 p-8 overflow-y-auto">
+        <div className="mx-auto max-w-3xl flex flex-col gap-y-10">
+          <Outlet />
+        </div>
       </div>
-     </div>
     </div>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;
