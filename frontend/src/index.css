@@ -59,7 +59,7 @@
 
 /* === dark mode variant === */
 @variant dark {
-  --background-app-rgb: rgb(17, 24, 39);  
+  --background-app-rgb: rgb(17, 24, 39);
   --color-secondary-900: rgb(249, 250, 251);
   --color-secondary-800: rgb(243, 244, 246);
   --color-secondary-700: rgb(229, 231, 235);
@@ -93,7 +93,7 @@
     @apply border border-secondary-700 text-secondary-700;
   }
   .btn--danger {
-    @apply border border-rose-700 text-rose-700;
+    @apply border border-rose-700 text-rose-700 hover:bg-rose-700 hover:text-secondary-0 transition-all duration-300 ease-out;
   }
   .badge {
     @apply inline-block whitespace-nowrap rounded-xl px-2 py-0.5;

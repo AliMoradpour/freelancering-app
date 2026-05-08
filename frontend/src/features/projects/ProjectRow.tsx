@@ -8,6 +8,7 @@ import truncateText from "../../utils/truncateText";
 import { HiOutlineTrash } from "react-icons/hi";
 import { TbPencilMinus } from "react-icons/tb";
 import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 function ProjectRow({
   project,
@@ -50,7 +51,7 @@ function ProjectRow({
             <TbPencilMinus className="w-5 h-5 text-primary-900" />
           </button>
           <Modal
-            title="Edit Content"
+            title={`ویرایش ${project.title}`}
             open={isEditOpen}
             onClose={() => setIsEditOpen(false)}
           >
@@ -58,14 +59,19 @@ function ProjectRow({
           </Modal>
           {/* Delete */}
           <button onClick={() => setIsDeleteOpen(true)}>
-          <HiOutlineTrash className="w-5 h-5 text-error" />
+            <HiOutlineTrash className="w-5 h-5 text-error" />
           </button>
           <Modal
-            title="Delete Content"
+            title={`حذف ${project.title}`}
             open={isDeleteOpen}
             onClose={() => setIsDeleteOpen(false)}
           >
-            This modal is for Deleting purposess
+            <ConfirmDelete
+              resourseName={project.title}
+              onClose={() => setIsDeleteOpen(false)}
+              onConfirm={()=> {}}
+              disabled={false}
+            />
           </Modal>
         </div>
       </td>
