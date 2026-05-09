@@ -9,7 +9,6 @@ export default function useOutsideClick(
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current?.contains(e.target as Node)) {
-        console.log("click");
         handler();
       }
     }
