@@ -13,3 +13,12 @@ export type owenrProjectType = {
   };
   status: "OPEN" | "CLOSED";
 };
+
+
+export type projectFormValue = {
+  title: string;
+  category: string;
+  budget: number;
+  deadline: string;
+  tags: string[];
+}
