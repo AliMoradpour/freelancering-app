@@ -1,14 +1,22 @@
-type Props = {
+import type {
+  UseFormRegister,
+  FieldValues,
+  Path,
+  RegisterOptions,
+  FieldErrors,
+} from "react-hook-form";
+
+type Props<T extends FieldValues> = {
   label: string;
-  name: string;
-  validationSchema?: any;
-  register: (name: string) => any;
+  name: Path<T>;                    
+  register: UseFormRegister<T>;
+  validationSchema?: RegisterOptions<T, Path<T>>;
   type?: string;
-  required: boolean;
-  errors?: Record<string, { message: string }>;
+  required?: boolean;
+  errors?: FieldErrors<T>;
 };
 
-const TextField = ({
+const TextField = <T extends FieldValues>({
   label,
   name,
   register,
@@ -16,7 +24,7 @@ const TextField = ({
   type = "text",
   required,
   errors,
-}: Props) => {
+}: Props<T>) => {
   return (
     <div>
       <label htmlFor={name} className="text-secondary-700 mb-2 block">
@@ -29,7 +37,9 @@ const TextField = ({
         {...register(name, validationSchema)}
       />
       {errors && errors[name] && (
-        <span className="text-danger">{errors[name]?.message}</span>
+        <span className="text-danger">
+          {errors[name]?.message as string}
+        </span>
       )}
     </div>
   );

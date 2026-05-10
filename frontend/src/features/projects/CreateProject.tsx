@@ -1,5 +1,4 @@
 import TextField from "../../ui/TextField";
-
 import { useForm } from "react-hook-form";
 import type { projectFormValue } from "../../types/projectTypes";
 
@@ -16,7 +15,7 @@ function CreateProject() {
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-      <TextField
+      <TextField<projectFormValue>
         label="عنوان پروژه"
         name="title"
         register={register}
@@ -27,6 +26,16 @@ function CreateProject() {
             value: 10,
             message: "طول عنوان نامعتبر است",
           },
+        }}
+        errors={errors}
+      />
+
+      <TextField<projectFormValue>
+        label="توضیحات"
+        name="description"
+        register={register}
+        validationSchema={{
+          required: "توضیحات ضروری است.",
         }}
         errors={errors}
       />

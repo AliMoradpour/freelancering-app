@@ -15,10 +15,10 @@ export type owenrProjectType = {
 };
 
 
+// types/projectTypes.ts
 export type projectFormValue = {
   title: string;
-  category: string;
-  budget: number;
-  deadline: string;
-  tags: string[];
-}
+  description: string;
+  deadline?: string;
+  // هر فیلد دیگه‌ای که نیاز داری
+};
