@@ -1,16 +1,18 @@
-import { useState } from "react";
 import TextField from "../../ui/TextField";
-import RadioInput from "../../ui/RadioInput";
 import { useMutation } from "@tanstack/react-query";
 import { completeProfile } from "../../services/authService";
 import toast from "react-hot-toast";
 import Loading from "../../ui/Loading";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const CompleteProfileForm = () => {
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [role, setRole] = useState<string>("");
+  const {
+    handleSubmit,
+    register,
+    formState = { errors },
+    watch,
+  } = useForm();
 
   const navigate = useNavigate();
 
@@ -18,11 +20,9 @@ const CompleteProfileForm = () => {
     mutationFn: completeProfile,
   });
 
-  const submitHandler = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
+  const onSubmit = async (data) => {
     try {
-      const { user, message } = await mutateAsync({ name, email, role });
+      const { user, message } = await mutateAsync(data);
       if (user.status !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", { icon: "👏" });
@@ -35,47 +35,64 @@ const CompleteProfileForm = () => {
   };
 
   return (
-    <div className="w-full max-w-sm pt-20">
-      <h2 className="font-black text-lg mb-8">اطلاعات خود را تکمیل کنید</h2>
-      <form className="space-y-8" onSubmit={submitHandler}>
-        <TextField
-          label="نام و نام خانوادگی"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e?.target.value)}
-        />
-        <TextField
-          label="ایمیل"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e?.target.value)}
-        />
-
-        <div className="flex justify-center gap-x-10 items-center">
-          <RadioInput
-            label="کارفرما"
-            name="role"
-            value="OWNER"
-            id="OWNER"
-            onChange={(e) => setRole(e?.target.value)}
-            checked={role === "OWNER"}
+    <div className="flex flex-col gap-y-6 items-center pt-10">
+      <h2 className="font-bold text-secondary-700 text-3xl mb-8">
+        اطلاعات خود را تکمیل کنید
+      </h2>
+      <div className="w-full sm:max-w-sm">
+        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            label="نام و نام خانوادگی"
+            name="name"
+            register={register}
+            validationSchema={{
+              required: "نام و نام خانوادگی ضروری است",
+            }}
+            errors={errors}
           />
-          <RadioInput
-            label="فریلنسر"
-            name="role"
-            value="FREELANCER"
-            id="FREELANCER"
-            onChange={(e) => setRole(e?.target.value)}
-            checked={role === "FREELANCER"}
+          <TextField
+            label="ایمیل"
+            name="email"
+            register={register}
+            validationSchema={{
+              required: "ایمیل ضروری است",
+              pattern: {
+                message: "ایمیل نامعتبر است",
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,}$/i,
+              },
+            }}
+            errors={errors}
           />
-        </div>
 
-        {isPending ? (
-          <Loading />
-        ) : (
-          <button className="btn btn--primary w-full">تکمیل فرم</button>
-        )}
-      </form>
+          <RadioInputGroup
+            errors={errors}
+            register={register}
+            watch={watch}
+            configs={{
+              name: "role",
+              validationSchema: { required: "انتخاب نقش ضروری است" },
+              options: [
+                {
+                  value: "OWNER",
+                  label: "کارفرما",
+                },
+                {
+                  value: "FREELANCER",
+                  label: "فریلنسر",
+                },
+              ],
+            }}
+          />
+
+          <div>
+            {isPending ? (
+              <Loading />
+            ) : (
+              <button className="btn btn--primary w-full">تکمیل فرم</button>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

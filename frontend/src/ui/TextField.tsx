@@ -8,7 +8,7 @@ import type {
 
 type Props<T extends FieldValues> = {
   label: string;
-  name: Path<T>;                    
+  name: Path<T>;
   register: UseFormRegister<T>;
   validationSchema?: RegisterOptions<T, Path<T>>;
   type?: string;
@@ -37,7 +37,7 @@ const TextField = <T extends FieldValues>({
         {...register(name, validationSchema)}
       />
       {errors && errors[name] && (
-        <span className="text-danger">
+        <span className="text-error text-sm">
           {errors[name]?.message as string}
         </span>
       )}

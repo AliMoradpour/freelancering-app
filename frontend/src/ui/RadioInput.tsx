@@ -1,27 +1,26 @@
-import type { ChangeEventHandler } from "react";
+import type { FieldValues } from "react-hook-form";
+import type { RadioInputProps } from "../types/authTypes";
 
-type Props = {
-  label: string;
-  value: string;
-  name: string;
-  id: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  checked: boolean;
-};
-
-const RadioInput = ({ label, value, id, name, onChange, checked }: Props) => {
+const RadioInput = <T extends FieldValues>({
+  label,
+  value,
+  id,
+  name,
+  register,
+  validationSchema,
+  watch,
+}: RadioInputProps<T>) => {
   return (
     <div className="flex items-center gap-x-2">
       <input
         type="radio"
-        name={name}
         id={id}
         value={value}
         className="w-4 h-4 accent-primary-900 cursor-pointer"
-        onChange={onChange}
-        checked={checked}
+        {...register(name, validationSchema)}
+        checked={watch(name) === value}
       />
-      <label htmlFor={value} className="text-secondary-900">
+      <label htmlFor={id} className="text-secondary-900">
         {label}
       </label>
     </div>

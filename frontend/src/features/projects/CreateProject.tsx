@@ -39,6 +39,20 @@ function CreateProject() {
         }}
         errors={errors}
       />
+      <TextField<projectFormValue>
+        label="بودجه"
+        name="budget"
+        register={register}
+        validationSchema={{
+          required: "بودجه‌ی پروژه ضروری است.",
+          valueAsNumber: true,
+        }}
+        type="number"
+        errors={errors}
+      />
+      <button type="submit" className="btn btn--primary w-full">
+        اضافه کردن
+      </button>
     </form>
   );
 }

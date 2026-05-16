@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getOwnerProjectsApi } from "../../services/projectsService";
-import type { owenrProjectType } from "../../types/projectTypes";
+import type { ownerProjectType } from "../../types/projectTypes";
 
 const useOwnerProjects = () => {
   const { isLoading, data } = useQuery({
@@ -8,7 +8,7 @@ const useOwnerProjects = () => {
     queryFn: getOwnerProjectsApi,
   });
 
-  const { projects }: { projects: owenrProjectType[] } = data ?? {};
+  const { projects }: { projects: ownerProjectType[] } = data ?? {};
   return { isLoading, projects };
 };
 

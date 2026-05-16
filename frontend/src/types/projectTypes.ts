@@ -1,5 +1,5 @@
 
-export type owenrProjectType = {
+export type ownerProjectType = {
   _id: string;
   title: string;
   category: {
@@ -20,5 +20,6 @@ export type projectFormValue = {
   title: string;
   description: string;
   deadline?: string;
+  budget: string;
   // هر فیلد دیگه‌ای که نیاز داری
 };

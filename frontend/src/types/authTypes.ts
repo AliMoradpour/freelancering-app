@@ -1,37 +1,57 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { FormEventHandler } from "react";
+import type {
+  UseFormRegister,
+  UseFormWatch,
+  Path,
+  RegisterOptions,
+  FieldValues,
+} from "react-hook-form";
 
-// ====== services 
+// ====== services
 export type getOtpPayload = {
   phoneNumber: string;
 };
+
 export type checkOtpPayload = {
   phoneNumber: string;
   otp: string;
 };
+
 export type completeProfilePayload = {
   email: string;
   name: string;
   role: string;
 };
 
-
-
-
-// ====== components 
-interface OtpResponse {
+// ====== responses
+export interface OtpResponse {
   phoneNumber: string;
   message: string;
 }
+
+// ====== form fields
+export type SendOtpFormFields = {
+  phoneNumber: string;
+};
+
+// ====== component props
+export type SendOTPFormProps = {
+  register: UseFormRegister<SendOtpFormFields>;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  isSendingOTP: boolean;
+};
 export type CheckOTPFormProps = {
   phoneNumber: string;
   onMoveBack: () => void;
-  reSendOTP: (event: { preventDefault: () => void }) => void;
-  otpResponse: OtpResponse | null | undefined;
+  reSendOTP: (payload: getOtpPayload) => Promise<void>;
+  otpResponse: OtpResponse | undefined;
 };
-
-export type SendOTPFormProps = {
-  phoneNumber: string;
-  setPhoneNumber: Dispatch<SetStateAction<string>>;
-  onSubmit: (event: { preventDefault: () => void }) => void;
-  isSendingOTP: boolean;
+export type RadioInputProps<T extends FieldValues> = {
+  label: string;
+  value: string;
+  name: Path<T>;
+  id: string;
+  register: UseFormRegister<T>;
+  validationSchema?: RegisterOptions<T, Path<T>>;
+  watch: UseFormWatch<T>;
 };

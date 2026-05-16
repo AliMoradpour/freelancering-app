@@ -26,7 +26,7 @@ const CheckOTPForm = ({
     mutationFn: checkOTP,
   });
 
-  const checkOTPHandler = async (event: { preventDefault: () => void }) => {
+  const checkOTPHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -34,29 +34,28 @@ const CheckOTPForm = ({
       toast.success(message);
 
       if (!user.isActive) return navigate("/complete-profile");
+
       if (user.status !== 2) {
         navigate("/");
         toast("پروفایل شما در انتظار تایید است", { icon: "👏" });
         return;
       }
-      if (user.role == "OWNER") return navigate("/owner");
-      if (user.role == "FREELANCER") return navigate("/freelancer");
+
+      if (user.role === "OWNER") return navigate("/owner");
+      if (user.role === "FREELANCER") return navigate("/freelancer");
     } catch (err: any) {
       toast.error(err?.response?.data?.message);
     }
   };
 
-  // timer effect
   useEffect(() => {
-    const time =
-      timer > 0 &&
-      setInterval(() => {
-        setTimer((t) => t - 1);
-      }, 1000);
+    if (timer <= 0) return;
 
-    return () => {
-      if (time) clearInterval(time);
-    };
+    const time = setInterval(() => {
+      setTimer((t) => t - 1);
+    }, 1000);
+
+    return () => clearInterval(time);
   }, [timer]);
 
   return (
@@ -65,16 +64,18 @@ const CheckOTPForm = ({
         <HiArrowRight className="w-5 text-secondary-900" />
         بازگشت
       </button>
+
       {otpResponse && (
         <div className="flex items-center gap-2">
           <p className="text-secondary-500">
-            کد برای {otpResponse?.phoneNumber} ارسال شد
+            کد برای {otpResponse.phoneNumber} ارسال شد
           </p>
           <button onClick={onMoveBack}>
             <CiEdit />
           </button>
         </div>
       )}
+
       <form className="space-y-10" onSubmit={checkOTPHandler}>
         <h3 className="font-bold text-secondary-800">کد تایید را وارد کنید</h3>
         <OTPInput
@@ -88,16 +89,22 @@ const CheckOTPForm = ({
         {isPending ? (
           <Loading />
         ) : (
-          <button className="btn btn--primary w-full">تایید</button>
+          <button type="submit" className="btn btn--primary w-full">
+            تایید
+          </button>
         )}
       </form>
+
       <div>
         {timer > 0 ? (
           <p className="text-secondary-500 font-light text-sm">
             {timer} ثانیه تا ارسال مجدد کد
           </p>
         ) : (
-          <button className="text-sm text-secondary-500" onClick={reSendOTP}>
+          <button
+            className="text-sm text-secondary-500"
+            onClick={() => reSendOTP({ phoneNumber })}
+          >
             ارسال مجدد کد
           </button>
         )}
