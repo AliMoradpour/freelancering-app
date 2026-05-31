@@ -15,11 +15,9 @@ export type ownerProjectType = {
 };
 
 
-// types/projectTypes.ts
-export type projectFormValue = {
+export type createProjectFormValue = {
   title: string;
   description: string;
   deadline?: string;
   budget: string;
-  // هر فیلد دیگه‌ای که نیاز داری
 };

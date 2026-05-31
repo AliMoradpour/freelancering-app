@@ -5,6 +5,7 @@ import type {
   Path,
   RegisterOptions,
   FieldValues,
+  FieldErrors,
 } from "react-hook-form";
 
 // ====== services
@@ -46,12 +47,40 @@ export type CheckOTPFormProps = {
   reSendOTP: (payload: getOtpPayload) => Promise<void>;
   otpResponse: OtpResponse | undefined;
 };
+
+export type TextInputProps<T extends FieldValues> = {
+  label: string;
+  name: Path<T>;
+  register: UseFormRegister<T>;
+  validationSchema?: RegisterOptions<T, Path<T>>;
+  type?: string;
+  required?: boolean;
+  errors?: FieldErrors<T>;
+  placeholder?: string;
+};
+
+type RadioOption = {
+  value: string;
+  label: string;
+};
 export type RadioInputProps<T extends FieldValues> = {
   label: string;
   value: string;
-  name: Path<T>;
   id: string;
+  name: Path<T>;
   register: UseFormRegister<T>;
   validationSchema?: RegisterOptions<T, Path<T>>;
   watch: UseFormWatch<T>;
+  errors?: FieldErrors<T>;
+};
+export type RadioInputGroupProps<T extends FieldValues> = {
+  label: string;
+  register: UseFormRegister<T>;
+  watch: UseFormWatch<T>;
+  errors?: FieldErrors<T>;
+  configs: {
+    name: Path<T>;
+    validationSchema?: RegisterOptions<T, Path<T>>;
+    options: RadioOption[];
+  };
 };

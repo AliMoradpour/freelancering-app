@@ -5,14 +5,16 @@ import toast from "react-hot-toast";
 import Loading from "../../ui/Loading";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import RadioInputGroup from "../../ui/RadioInputGroup";
+import type { completeProfilePayload } from "../../types/authTypes";
 
 const CompleteProfileForm = () => {
   const {
     handleSubmit,
     register,
-    formState = { errors },
+    formState: { errors },
     watch,
-  } = useForm();
+  } = useForm<completeProfilePayload>();
 
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ const CompleteProfileForm = () => {
     mutationFn: completeProfile,
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: completeProfilePayload) => {
     try {
       const { user, message } = await mutateAsync(data);
       if (user.status !== 2) {
@@ -41,7 +43,7 @@ const CompleteProfileForm = () => {
       </h2>
       <div className="w-full sm:max-w-sm">
         <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-          <TextField
+          <TextField<completeProfilePayload>
             label="نام و نام خانوادگی"
             name="name"
             register={register}
@@ -50,7 +52,7 @@ const CompleteProfileForm = () => {
             }}
             errors={errors}
           />
-          <TextField
+          <TextField<completeProfilePayload>
             label="ایمیل"
             name="email"
             register={register}
@@ -68,6 +70,7 @@ const CompleteProfileForm = () => {
             errors={errors}
             register={register}
             watch={watch}
+            label="نقش"
             configs={{
               name: "role",
               validationSchema: { required: "انتخاب نقش ضروری است" },

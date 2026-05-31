@@ -1,20 +1,5 @@
-import type {
-  UseFormRegister,
-  FieldValues,
-  Path,
-  RegisterOptions,
-  FieldErrors,
-} from "react-hook-form";
-
-type Props<T extends FieldValues> = {
-  label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  validationSchema?: RegisterOptions<T, Path<T>>;
-  type?: string;
-  required?: boolean;
-  errors?: FieldErrors<T>;
-};
+import type { FieldValues } from "react-hook-form";
+import type { TextInputProps } from "../types/authTypes";
 
 const TextField = <T extends FieldValues>({
   label,
@@ -24,7 +9,8 @@ const TextField = <T extends FieldValues>({
   type = "text",
   required,
   errors,
-}: Props<T>) => {
+  placeholder,
+}: TextInputProps<T>) => {
   return (
     <div>
       <label htmlFor={name} className="text-secondary-700 mb-2 block">
@@ -35,6 +21,7 @@ const TextField = <T extends FieldValues>({
         id={name}
         type={type}
         {...register(name, validationSchema)}
+        placeholder={placeholder}
       />
       {errors && errors[name] && (
         <span className="text-error text-sm">

@@ -1,21 +1,21 @@
 import TextField from "../../ui/TextField";
 import { useForm } from "react-hook-form";
-import type { projectFormValue } from "../../types/projectTypes";
+import type { createProjectFormValue } from "../../types/projectTypes";
 
 function CreateProject() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<projectFormValue>();
+  } = useForm<createProjectFormValue>();
 
-  const onSubmit = (data: projectFormValue) => {
+  const onSubmit = (data: createProjectFormValue) => {
     console.log(data);
   };
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-      <TextField<projectFormValue>
+      <TextField<createProjectFormValue>
         label="عنوان پروژه"
         name="title"
         register={register}
@@ -30,7 +30,7 @@ function CreateProject() {
         errors={errors}
       />
 
-      <TextField<projectFormValue>
+      <TextField<createProjectFormValue>
         label="توضیحات"
         name="description"
         register={register}
@@ -39,7 +39,7 @@ function CreateProject() {
         }}
         errors={errors}
       />
-      <TextField<projectFormValue>
+      <TextField<createProjectFormValue>
         label="بودجه"
         name="budget"
         register={register}
