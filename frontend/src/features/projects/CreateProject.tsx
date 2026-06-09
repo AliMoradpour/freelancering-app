@@ -8,6 +8,9 @@ import { useState } from "react";
 import type { DateObject } from "react-multi-date-picker";
 
 function CreateProject() {
+  const [tags, setTags] = useState<string[]>([]);
+  const [date, setDate] = useState<DateObject | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -17,9 +20,6 @@ function CreateProject() {
   const onSubmit = (data: createProjectFormValue) => {
     console.log(data);
   };
-
-  const [tags, setTags] = useState<string[]>([]);
-  const [date, setDate] = useState<DateObject | null>(null);
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +69,7 @@ function CreateProject() {
         <label className="mb-2 block text-secondary-700">تگ</label>
         <TagsInput value={tags} onChange={setTags} name="tags" />
       </div>
-      {/* <DatePickerField date={date} setDate={setDate} label="ددلاین" /> */}
+      <DatePickerField date={date} setDate={setDate} label="ددلاین" />
       <button type="submit" className="btn btn--primary w-full">
         اضافه کردن
       </button>
