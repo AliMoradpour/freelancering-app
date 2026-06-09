@@ -20,4 +20,6 @@ export type createProjectFormValue = {
   description: string;
   deadline?: string;
   budget: string;
+  category: string[];
+
 };

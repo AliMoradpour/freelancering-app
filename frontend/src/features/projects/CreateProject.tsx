@@ -1,6 +1,11 @@
 import TextField from "../../ui/TextField";
 import { useForm } from "react-hook-form";
+import { TagsInput } from "react-tag-input-component";
 import type { createProjectFormValue } from "../../types/projectTypes";
+import RHFSelect from "../../ui/RHFSelect";
+import DatePickerField from "../../ui/DatePickerField";
+import { useState } from "react";
+import type { DateObject } from "react-multi-date-picker";
 
 function CreateProject() {
   const {
@@ -12,6 +17,9 @@ function CreateProject() {
   const onSubmit = (data: createProjectFormValue) => {
     console.log(data);
   };
+
+  const [tags, setTags] = useState<string[]>([]);
+  const [date, setDate] = useState<DateObject | null>(null);
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
@@ -50,6 +58,18 @@ function CreateProject() {
         type="number"
         errors={errors}
       />
+      <RHFSelect
+        label="دسته بندی"
+        required
+        name="category"
+        register={register}
+        options={[]}
+      />
+      <div>
+        <label className="mb-2 block text-secondary-700">تگ</label>
+        <TagsInput value={tags} onChange={setTags} name="tags" />
+      </div>
+      {/* <DatePickerField date={date} setDate={setDate} label="ددلاین" /> */}
       <button type="submit" className="btn btn--primary w-full">
         اضافه کردن
       </button>

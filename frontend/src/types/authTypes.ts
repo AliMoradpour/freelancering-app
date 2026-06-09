@@ -84,3 +84,15 @@ export type RadioInputGroupProps<T extends FieldValues> = {
     options: RadioOption[];
   };
 };
+
+type SelectOptions = {
+  value: string;
+  label: string;
+};
+export type SelectInputProps<T extends FieldValues> = {
+  label: string;
+  name: Path<T>;
+  register: UseFormRegister<T>;
+  options: SelectOptions[];
+  required: boolean;
+};
