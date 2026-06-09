@@ -6,10 +6,12 @@ import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import { useState } from "react";
 import type { DateObject } from "react-multi-date-picker";
+import useCategories from "../../hooks/useCategories";
 
 function CreateProject() {
   const [tags, setTags] = useState<string[]>([]);
   const [date, setDate] = useState<DateObject | null>(null);
+  const { categories, isLoading, transformedCategories } = useCategories();
 
   const {
     register,
@@ -63,13 +65,13 @@ function CreateProject() {
         required
         name="category"
         register={register}
-        options={[]}
+        options={categories}
       />
       <div>
         <label className="mb-2 block text-secondary-700">تگ</label>
         <TagsInput value={tags} onChange={setTags} name="tags" />
       </div>
-      <DatePickerField date={date} setDate={setDate} label="ددلاین" />
+      {/* <DatePickerField date={date} setDate={setDate} label="ددلاین" /> */}
       <button type="submit" className="btn btn--primary w-full">
         اضافه کردن
       </button>
