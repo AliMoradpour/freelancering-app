@@ -5,17 +5,16 @@ import type { createProjectFormValue } from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import { useState } from "react";
-import type { DateObject } from "react-multi-date-picker";
 import useCategories from "../../hooks/useCategories";
 
 function CreateProject() {
   const [tags, setTags] = useState<string[]>([]);
-  const [date, setDate] = useState<DateObject | null>(null);
-  const { categories, isLoading, transformedCategories } = useCategories();
+  const { categories } = useCategories();
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<createProjectFormValue>();
 
@@ -39,7 +38,6 @@ function CreateProject() {
         }}
         errors={errors}
       />
-
       <TextField<createProjectFormValue>
         label="توضیحات"
         name="description"
@@ -60,7 +58,7 @@ function CreateProject() {
         type="number"
         errors={errors}
       />
-      <RHFSelect
+      <RHFSelect<createProjectFormValue>
         label="دسته بندی"
         required
         name="category"
@@ -71,7 +69,11 @@ function CreateProject() {
         <label className="mb-2 block text-secondary-700">تگ</label>
         <TagsInput value={tags} onChange={setTags} name="tags" />
       </div>
-      {/* <DatePickerField date={date} setDate={setDate} label="ددلاین" /> */}
+      <DatePickerField<createProjectFormValue>
+        label="ددلاین"
+        name="deadline"
+        control={control}
+      />
       <button type="submit" className="btn btn--primary w-full">
         اضافه کردن
       </button>
