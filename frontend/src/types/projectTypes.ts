@@ -1,5 +1,3 @@
-import type { DateObject } from "react-multi-date-picker";
-
 export type ownerProjectType = {
   _id: string;
   title: string;
@@ -14,7 +12,12 @@ export type ownerProjectType = {
 export type createProjectFormValue = {
   title: string;
   description: string;
-  deadline?: DateObject | null;
+  deadline?: Date | null;
   budget: string;
   category: string;
+  tags: string[];
+};
+
+export type createProjectPayload = Omit<createProjectFormValue, "deadline"> & {
+  deadline?: string;
 };

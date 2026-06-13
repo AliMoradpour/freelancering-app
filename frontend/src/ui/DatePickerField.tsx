@@ -28,7 +28,7 @@ function DatePickerField<T extends FieldValues>({
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <div>
             <ReactDatePicker
-              selected={value ? new Date(value) : null}
+              selected={(value as Date) ?? null}
               onChange={(date) => onChange(date)}
               dateFormat="yyyy/MM/dd"
               className="textField__input"

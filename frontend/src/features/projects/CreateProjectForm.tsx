@@ -1,26 +1,43 @@
 import TextField from "../../ui/TextField";
-import { useForm } from "react-hook-form";
-import type { createProjectFormValue } from "../../types/projectTypes";
+import { useForm, Controller } from "react-hook-form";
+import type { createProjectFormValue, createProjectPayload } from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
-import { useState } from "react";
 import useCategories from "../../hooks/useCategories";
 import TagsInput from "../../ui/TagsInput";
+import useCreateProject from "./useCreateProject";
+import Loading from "../../ui/Loading";
 
-function CreateProject() {
-  const [tags, setTags] = useState<string[]>([]);
+type Props = {
+  onClose: () => void;
+};
+
+function CreateProjectForm({ onClose }: Props) {
   const { categories } = useCategories();
+  const { createProject, isCreating } = useCreateProject();
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
-  } = useForm<createProjectFormValue>();
+  } = useForm<createProjectFormValue>({
+    defaultValues: { tags: [] },
+  });
 
-  const onSubmit = (data: createProjectFormValue) => {
-    console.log({ ...data, tags });
+const onSubmit = (data: createProjectFormValue) => {
+  const newProject: createProjectPayload = {
+    ...data,
+    deadline: data.deadline ? data.deadline.toISOString() : undefined,
   };
+  createProject(newProject, {
+    onSuccess: () => {
+      onClose();
+      reset();
+    },
+  });
+};
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
@@ -67,18 +84,30 @@ function CreateProject() {
       />
       <div>
         <label className="mb-2 block text-secondary-700">تگ</label>
-        <TagsInput value={tags} onChange={setTags} />
+        <Controller
+          name="tags"
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <TagsInput value={value} onChange={onChange} />
+          )}
+        />
       </div>
       <DatePickerField<createProjectFormValue>
         label="ددلاین"
         name="deadline"
         control={control}
       />
-      <button type="submit" className="btn btn--primary w-full">
-        اضافه کردن
-      </button>
+      <div className="mt-8">
+        {isCreating ? (
+          <Loading />
+        ) : (
+          <button type="submit" className="btn btn--primary w-full">
+            اضافه کردن
+          </button>
+        )}
+      </div>
     </form>
   );
 }
 
-export default CreateProject;
+export default CreateProjectForm;
