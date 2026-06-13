@@ -1,11 +1,11 @@
 import TextField from "../../ui/TextField";
 import { useForm } from "react-hook-form";
-import { TagsInput } from "react-tag-input-component";
 import type { createProjectFormValue } from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import { useState } from "react";
 import useCategories from "../../hooks/useCategories";
+import TagsInput from "../../ui/TagsInput";
 
 function CreateProject() {
   const [tags, setTags] = useState<string[]>([]);
@@ -19,7 +19,7 @@ function CreateProject() {
   } = useForm<createProjectFormValue>();
 
   const onSubmit = (data: createProjectFormValue) => {
-    console.log(data);
+    console.log({ ...data, tags });
   };
 
   return (
@@ -67,7 +67,7 @@ function CreateProject() {
       />
       <div>
         <label className="mb-2 block text-secondary-700">تگ</label>
-        <TagsInput value={tags} onChange={setTags} name="tags" />
+        <TagsInput value={tags} onChange={setTags} />
       </div>
       <DatePickerField<createProjectFormValue>
         label="ددلاین"

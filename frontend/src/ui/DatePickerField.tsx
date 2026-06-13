@@ -1,9 +1,7 @@
-import DatePicker from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
-import type { DateObject } from "react-multi-date-picker";
-import type { Control, FieldValues, Path } from "react-hook-form";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Controller } from "react-hook-form";
+import type { Control, FieldValues, Path } from "react-hook-form";
 
 type DatePickerFieldProps<T extends FieldValues> = {
   label: string;
@@ -28,21 +26,19 @@ function DatePickerField<T extends FieldValues>({
         control={control}
         rules={{ required: required ? "ددلاین ضروری است." : false }}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <>
-            <DatePicker
-              containerClassName="w-full"
-              inputClass="textField__input"
-              calendarPosition="bottom-center"
-              value={value as DateObject | null}
+          <div>
+            <ReactDatePicker
+              selected={value ? new Date(value) : null}
               onChange={(date) => onChange(date)}
-              format="YYYY/MM/DD"
-              calendar={persian}
-              locale={persian_fa}
+              dateFormat="yyyy/MM/dd"
+              className="textField__input"
+              wrapperClassName="w-full"
+              minDate={new Date()}
             />
             {error && (
               <span className="text-error text-sm">{error.message}</span>
             )}
-          </>
+          </div>
         )}
       />
     </div>
