@@ -10,6 +10,7 @@ export type ownerProjectType = {
 };
 
 export type createProjectFormValue = {
+  _id: string;
   title: string;
   description: string;
   deadline?: Date | null;

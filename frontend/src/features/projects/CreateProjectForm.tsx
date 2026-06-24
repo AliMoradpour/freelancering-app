@@ -1,20 +1,42 @@
 import TextField from "../../ui/TextField";
 import { useForm, Controller } from "react-hook-form";
-import type { createProjectFormValue, createProjectPayload } from "../../types/projectTypes";
+import type {
+  createProjectFormValue,
+  createProjectPayload,
+} from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import useCategories from "../../hooks/useCategories";
 import TagsInput from "../../ui/TagsInput";
 import useCreateProject from "./useCreateProject";
 import Loading from "../../ui/Loading";
+import useEditProject from "./useEditProject";
 
 type Props = {
   onClose: () => void;
+  projectToEdit?: createProjectPayload;
 };
 
-function CreateProjectForm({ onClose }: Props) {
+function CreateProjectForm({ onClose, projectToEdit }: Props) {
+  const editId = projectToEdit?._id;
+  const isEditSession = Boolean(editId);
+
+  const editValues: Partial<createProjectFormValue> = isEditSession
+    ? {
+        title: projectToEdit?.title,
+        description: projectToEdit?.description,
+        budget: projectToEdit?.budget,
+        category: projectToEdit?.category,
+        deadline: projectToEdit?.deadline
+          ? new Date(projectToEdit.deadline)
+          : null,
+        tags: projectToEdit?.tags ?? [],
+      }
+    : {};
+
   const { categories } = useCategories();
   const { createProject, isCreating } = useCreateProject();
+  const { editProject, isEditing } = useEditProject();
 
   const {
     register,
@@ -23,21 +45,36 @@ function CreateProjectForm({ onClose }: Props) {
     reset,
     formState: { errors },
   } = useForm<createProjectFormValue>({
-    defaultValues: { tags: [] },
+    defaultValues: editValues,
   });
 
-const onSubmit = (data: createProjectFormValue) => {
-  const newProject: createProjectPayload = {
-    ...data,
-    deadline: data.deadline ? data.deadline.toISOString() : undefined,
+  const onSubmit = (data: createProjectFormValue) => {
+    const newProject: createProjectPayload = {
+      ...data,
+      deadline: data.deadline ? data.deadline.toISOString() : undefined,
+    };
+
+    if (isEditSession && editId) {
+      editProject(
+        { id: editId, newProject },
+        {
+          onSuccess: () => {
+            onClose();
+            reset();
+          },
+        }
+      );
+    } else {
+      createProject(newProject, {
+        onSuccess: () => {
+          onClose();
+          reset();
+        },
+      });
+    }
   };
-  createProject(newProject, {
-    onSuccess: () => {
-      onClose();
-      reset();
-    },
-  });
-};
+
+  const isLoading = isCreating || isEditing;
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
@@ -48,10 +85,7 @@ const onSubmit = (data: createProjectFormValue) => {
         required
         validationSchema={{
           required: "عنوان پروژه ضروری است.",
-          minLength: {
-            value: 10,
-            message: "طول عنوان نامعتبر است",
-          },
+          minLength: { value: 10, message: "طول عنوان نامعتبر است" },
         }}
         errors={errors}
       />
@@ -59,9 +93,7 @@ const onSubmit = (data: createProjectFormValue) => {
         label="توضیحات"
         name="description"
         register={register}
-        validationSchema={{
-          required: "توضیحات ضروری است.",
-        }}
+        validationSchema={{ required: "توضیحات ضروری است." }}
         errors={errors}
       />
       <TextField<createProjectFormValue>
@@ -70,7 +102,6 @@ const onSubmit = (data: createProjectFormValue) => {
         register={register}
         validationSchema={{
           required: "بودجه‌ی پروژه ضروری است.",
-          valueAsNumber: true,
         }}
         type="number"
         errors={errors}
@@ -88,7 +119,7 @@ const onSubmit = (data: createProjectFormValue) => {
           name="tags"
           control={control}
           render={({ field: { value, onChange } }) => (
-            <TagsInput value={value} onChange={onChange} />
+            <TagsInput value={value ?? []} onChange={onChange} />
           )}
         />
       </div>
@@ -98,11 +129,11 @@ const onSubmit = (data: createProjectFormValue) => {
         control={control}
       />
       <div className="mt-8">
-        {isCreating ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <button type="submit" className="btn btn--primary w-full">
-            اضافه کردن
+            {isEditSession ? "ویرایش پروژه" : "اضافه کردن"}
           </button>
         )}
       </div>

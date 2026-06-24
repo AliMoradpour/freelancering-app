@@ -12,3 +12,9 @@ export function removeProjectApi(id: string) {
 export function createProjectApi(data: createProjectPayload) {
   return http.post("/project/add", data).then(({ data }) => data?.data);
 }
+
+export function editProjectApi({ id, newProject }: { id: string; newProject: createProjectPayload }) {
+  return http
+    .patch(`/project/update/${id}`, newProject)
+    .then(({ data }) => data?.data);
+}

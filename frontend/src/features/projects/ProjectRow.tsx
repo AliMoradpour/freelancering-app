@@ -10,6 +10,7 @@ import { TbPencilMinus } from "react-icons/tb";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useRemoveProject from "./useRemoveProject";
+import CreateProjectForm from "./CreateProjectForm";
 
 function ProjectRow({
   project,
@@ -58,7 +59,10 @@ function ProjectRow({
             open={isEditOpen}
             onClose={() => setIsEditOpen(false)}
           >
-            This modal is for editing purposess
+            <CreateProjectForm
+              onClose={() => setIsEditOpen(false)}
+              projectToEdit={project}
+            />
           </Modal>
           {/* Delete */}
           <button onClick={() => setIsDeleteOpen(true)}>
