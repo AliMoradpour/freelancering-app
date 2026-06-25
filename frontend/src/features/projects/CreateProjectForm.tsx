@@ -1,9 +1,6 @@
 import TextField from "../../ui/TextField";
 import { useForm, Controller } from "react-hook-form";
-import type {
-  createProjectFormValue,
-  createProjectPayload,
-} from "../../types/projectTypes";
+import type { createProjectFormValue, createProjectPayload, ownerProjectType } from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import useCategories from "../../hooks/useCategories";
@@ -14,7 +11,7 @@ import useEditProject from "./useEditProject";
 
 type Props = {
   onClose: () => void;
-  projectToEdit?: createProjectPayload;
+  projectToEdit?: ownerProjectType; // ✅ تغییر اصلی
 };
 
 function CreateProjectForm({ onClose, projectToEdit }: Props) {
@@ -25,11 +22,9 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
     ? {
         title: projectToEdit?.title,
         description: projectToEdit?.description,
-        budget: projectToEdit?.budget,
-        category: projectToEdit?.category,
-        deadline: projectToEdit?.deadline
-          ? new Date(projectToEdit.deadline)
-          : null,
+        budget: String(projectToEdit?.budget ?? ""),
+        category: projectToEdit?.category?._id ?? "",
+        deadline: projectToEdit?.deadline ? new Date(projectToEdit.deadline) : undefined,
         tags: projectToEdit?.tags ?? [],
       }
     : {};
@@ -62,7 +57,7 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
             onClose();
             reset();
           },
-        }
+        },
       );
     } else {
       createProject(newProject, {
@@ -118,16 +113,10 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
         <Controller
           name="tags"
           control={control}
-          render={({ field: { value, onChange } }) => (
-            <TagsInput value={value ?? []} onChange={onChange} />
-          )}
+          render={({ field: { value, onChange } }) => <TagsInput value={value ?? []} onChange={onChange} />}
         />
       </div>
-      <DatePickerField<createProjectFormValue>
-        label="ددلاین"
-        name="deadline"
-        control={control}
-      />
+      <DatePickerField<createProjectFormValue> label="ددلاین" name="deadline" control={control} />
       <div className="mt-8">
         {isLoading ? (
           <Loading />

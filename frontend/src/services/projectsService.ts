@@ -14,7 +14,9 @@ export function createProjectApi(data: createProjectPayload) {
 }
 
 export function editProjectApi({ id, newProject }: { id: string; newProject: createProjectPayload }) {
-  return http
-    .patch(`/project/update/${id}`, newProject)
-    .then(({ data }) => data?.data);
+  return http.patch(`/project/update/${id}`, newProject).then(({ data }) => data?.data);
+}
+
+export function toggleProjectStatusApi({ id, data }: { id: string; data: { status: string } }) {
+  return http.patch(`/project/${id}`, data).then(({ data }) => data.data);
 }

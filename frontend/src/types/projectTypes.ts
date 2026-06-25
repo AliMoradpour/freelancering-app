@@ -1,7 +1,8 @@
 export type ownerProjectType = {
   _id: string;
   title: string;
-  category: { title: string };
+  description: string;
+  category: { _id: string; title: string };
   budget: number;
   deadline: string;
   tags: string[];
@@ -10,10 +11,9 @@ export type ownerProjectType = {
 };
 
 export type createProjectFormValue = {
-  _id: string;
   title: string;
   description: string;
-  deadline?: Date | null;
+  deadline?: Date;
   budget: string;
   category: string;
   tags: string[];

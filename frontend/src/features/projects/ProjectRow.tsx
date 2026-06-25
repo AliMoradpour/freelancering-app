@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { owenrProjectType } from "../../types/projectTypes";
+import type { ownerProjectType } from "../../types/projectTypes";
 import Table from "../../ui/Table";
 import toLocalDate from "../../utils/toLocalDate";
 import { toPersianNumbersWithComma } from "../../utils/toPersianNumbers";
@@ -11,14 +11,9 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useRemoveProject from "./useRemoveProject";
 import CreateProjectForm from "./CreateProjectForm";
+import ToggleProjectStatus from "./ToggleProjectStatus";
 
-function ProjectRow({
-  project,
-  index,
-}: {
-  project: owenrProjectType;
-  index: number;
-}) {
+function ProjectRow({ project, index }: { project: ownerProjectType; index: number }) {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 
@@ -42,11 +37,7 @@ function ProjectRow({
       </td>
       <td>{project.freelancer?.name || "-"}</td>
       <td>
-        {project.status === "OPEN" ? (
-          <span className="badge badge--success">باز</span>
-        ) : (
-          <span className="badge badge--danger">بسته</span>
-        )}
+        <ToggleProjectStatus project={project} />
       </td>
       <td>
         <div className="flex items-center gap-x-4">
@@ -54,25 +45,14 @@ function ProjectRow({
           <button onClick={() => setIsEditOpen(true)}>
             <TbPencilMinus className="w-5 h-5 text-primary-900" />
           </button>
-          <Modal
-            title={`ویرایش ${project.title}`}
-            open={isEditOpen}
-            onClose={() => setIsEditOpen(false)}
-          >
-            <CreateProjectForm
-              onClose={() => setIsEditOpen(false)}
-              projectToEdit={project}
-            />
+          <Modal title={`ویرایش ${project.title}`} open={isEditOpen} onClose={() => setIsEditOpen(false)}>
+            <CreateProjectForm onClose={() => setIsEditOpen(false)} projectToEdit={project} />
           </Modal>
           {/* Delete */}
           <button onClick={() => setIsDeleteOpen(true)}>
             <HiOutlineTrash className="w-5 h-5 text-error" />
           </button>
-          <Modal
-            title={`حذف ${project.title}`}
-            open={isDeleteOpen}
-            onClose={() => setIsDeleteOpen(false)}
-          >
+          <Modal title={`حذف ${project.title}`} open={isDeleteOpen} onClose={() => setIsDeleteOpen(false)}>
             <ConfirmDelete
               resourseName={project.title}
               onClose={() => setIsDeleteOpen(false)}
