@@ -1,12 +1,5 @@
 import type { FormEventHandler } from "react";
-import type {
-  UseFormRegister,
-  UseFormWatch,
-  Path,
-  RegisterOptions,
-  FieldValues,
-  FieldErrors,
-} from "react-hook-form";
+import type { UseFormRegister, UseFormWatch, Path, RegisterOptions, FieldValues, FieldErrors } from "react-hook-form";
 
 // ====== services
 export type getOtpPayload = {
@@ -86,7 +79,7 @@ export type RadioInputGroupProps<T extends FieldValues> = {
 };
 
 type SelectOptions = {
-  value: string;
+  value: string | number;
   label: string;
 };
 export type SelectInputProps<T extends FieldValues> = {

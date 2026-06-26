@@ -1,19 +1,47 @@
-import type { proposalType } from "../../types/proposalTypes";
+import { useState } from "react";
+import type { ProposalType } from "../../types/proposalTypes";
+import Modal from "../../ui/Modal";
 import Table from "../../ui/Table";
 import truncateText from "../../utils/truncateText";
+import ChangeProposalStatus from "./ChangeProposalStatus";
 
-export default function ProposalRow({ proposal, index }: { proposal: proposalType; index: number }) {
+const statusStyle = [
+  {
+    label: "رد شده",
+    className: "badge--danger",
+  },
+  {
+    label: "در انتظار تایید",
+    className: "badge--secondary",
+  },
+  {
+    label: "تایید شده",
+    className: "badge--success",
+  },
+];
+
+export default function ProposalRow({ proposal, index }: { proposal: ProposalType; index: number }) {
+  const { status, user, description, duration, price } = proposal;
+
+  const [open, setOpen] = useState(false);
   return (
     <Table.Row>
       <td>{index + 1}</td>
-      <td>{proposal.user.name}</td>
+      <td>{user.name}</td>
       <td>
-        <p>{truncateText(proposal.description, 50)}</p>
+        <p>{truncateText(description, 50)}</p>
       </td>
-      <td>{proposal.duration} روز</td>
-      <td>{proposal.price}</td>
-      <td>{proposal.status}</td>
-      <td>++</td>
+      <td>{duration} روز</td>
+      <td>{price}</td>
+      <td>
+        <span className={`badge ${statusStyle[status].className}`}>{statusStyle[status].label}</span>
+      </td>
+      <td>
+        <button onClick={() => setOpen(true)}>تغییر وضعیت</button>
+        <Modal open={open} onClose={() => setOpen(false)} title="تغییر وضعیت درخواست">
+          <ChangeProposalStatus proposalId={proposal._id} onClose={() => setOpen(false)} />
+        </Modal>
+      </td>
     </Table.Row>
   );
 }

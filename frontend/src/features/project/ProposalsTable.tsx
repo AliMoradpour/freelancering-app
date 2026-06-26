@@ -1,9 +1,9 @@
-import type { proposalType } from "../../types/proposalTypes";
+import type { ProposalType } from "../../types/proposalTypes";
 import Empty from "../../ui/Empty";
 import Table from "../../ui/Table";
 import ProposalRow from "./ProposalRow";
 
-export default function ProposalsTable({ proposals }: { proposals: proposalType[] }) {
+export default function ProposalsTable({ proposals }: { proposals: ProposalType[] }) {
   if (!proposals.length) return <Empty resourceName="درخواستی" />;
   return (
     <Table>
