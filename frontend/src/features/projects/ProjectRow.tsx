@@ -5,13 +5,14 @@ import toLocalDate from "../../utils/toLocalDate";
 import { toPersianNumbersWithComma } from "../../utils/toPersianNumbers";
 import truncateText from "../../utils/truncateText";
 
-import { HiOutlineTrash } from "react-icons/hi";
+import { HiEye, HiOutlineTrash } from "react-icons/hi";
 import { TbPencilMinus } from "react-icons/tb";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import useRemoveProject from "./useRemoveProject";
 import CreateProjectForm from "./CreateProjectForm";
 import ToggleProjectStatus from "./ToggleProjectStatus";
+import { Link } from "react-router-dom";
 
 function ProjectRow({ project, index }: { project: ownerProjectType; index: number }) {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
@@ -67,6 +68,11 @@ function ProjectRow({ project, index }: { project: ownerProjectType; index: numb
             />
           </Modal>
         </div>
+      </td>
+      <td>
+        <Link to={project._id} className="flex justify-center">
+          <HiEye className="size-5 text-primary-800" />
+        </Link>
       </td>
     </Table.Row>
   );
