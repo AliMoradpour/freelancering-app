@@ -8,7 +8,7 @@ export type ownerProjectType = {
   tags: string[];
   freelancer?: { name: string };
   status: "OPEN" | "CLOSED";
-  proposals?: object;
+  proposals?: object[];
 };
 
 export type createProjectFormValue = {
