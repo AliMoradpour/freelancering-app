@@ -1,8 +1,4 @@
-import type {
-  checkOtpPayload,
-  completeProfilePayload,
-  getOtpPayload,
-} from "../types/authTypes";
+import type { checkOtpPayload, completeProfilePayload, getOtpPayload } from "../types/authTypes";
 import http from "./httpService";
 
 export function getOTP(payload: getOtpPayload) {
@@ -14,11 +10,13 @@ export function checkOTP(payload: checkOtpPayload) {
 }
 
 export function completeProfile(payload: completeProfilePayload) {
-  return http
-    .post("/user/complete-profile", payload)
-    .then(({ data }) => data.data);
+  return http.post("/user/complete-profile", payload).then(({ data }) => data.data);
 }
 
 export function getUser() {
   return http.get("/user/profile").then(({ data }) => data.data);
+}
+
+export function logoutApi() {
+  return http.post("/user/logout").then(({ data }) => data.data);
 }
