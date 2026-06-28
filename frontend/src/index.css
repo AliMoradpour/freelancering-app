@@ -58,7 +58,7 @@
 }
 
 /* === dark mode variant === */
-@variant dark {
+:root:where(.dark, .dark *) {
   --background-app-rgb: rgb(17, 24, 39);
   --color-secondary-900: rgb(249, 250, 251);
   --color-secondary-800: rgb(243, 244, 246);
