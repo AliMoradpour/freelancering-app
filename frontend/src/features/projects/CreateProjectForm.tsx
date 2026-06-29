@@ -1,6 +1,6 @@
 import TextField from "../../ui/TextField";
 import { useForm, Controller } from "react-hook-form";
-import type { createProjectFormValue, createProjectPayload, ownerProjectType } from "../../types/projectTypes";
+import type { CreateProjectFormValue, createProjectPayload, OwnerProjectType } from "../../types/projectTypes";
 import RHFSelect from "../../ui/RHFSelect";
 import DatePickerField from "../../ui/DatePickerField";
 import useCategories from "../../hooks/useCategories";
@@ -11,14 +11,14 @@ import useEditProject from "./useEditProject";
 
 type Props = {
   onClose: () => void;
-  projectToEdit?: ownerProjectType; // ✅ تغییر اصلی
+  projectToEdit?: OwnerProjectType; // ✅ تغییر اصلی
 };
 
 function CreateProjectForm({ onClose, projectToEdit }: Props) {
   const editId = projectToEdit?._id;
   const isEditSession = Boolean(editId);
 
-  const editValues: Partial<createProjectFormValue> = isEditSession
+  const editValues: Partial<CreateProjectFormValue> = isEditSession
     ? {
         title: projectToEdit?.title,
         description: projectToEdit?.description,
@@ -39,11 +39,11 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
     control,
     reset,
     formState: { errors },
-  } = useForm<createProjectFormValue>({
+  } = useForm<CreateProjectFormValue>({
     defaultValues: editValues,
   });
 
-  const onSubmit = (data: createProjectFormValue) => {
+  const onSubmit = (data: CreateProjectFormValue) => {
     const newProject: createProjectPayload = {
       ...data,
       deadline: data.deadline ? data.deadline.toISOString() : undefined,
@@ -73,7 +73,7 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
 
   return (
     <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-      <TextField<createProjectFormValue>
+      <TextField<CreateProjectFormValue>
         label="عنوان پروژه"
         name="title"
         register={register}
@@ -84,14 +84,14 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
         }}
         errors={errors}
       />
-      <TextField<createProjectFormValue>
+      <TextField<CreateProjectFormValue>
         label="توضیحات"
         name="description"
         register={register}
         validationSchema={{ required: "توضیحات ضروری است." }}
         errors={errors}
       />
-      <TextField<createProjectFormValue>
+      <TextField<CreateProjectFormValue>
         label="بودجه"
         name="budget"
         register={register}
@@ -101,7 +101,7 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
         type="number"
         errors={errors}
       />
-      <RHFSelect<createProjectFormValue>
+      <RHFSelect<CreateProjectFormValue>
         label="دسته بندی"
         required
         name="category"
@@ -116,7 +116,7 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
           render={({ field: { value, onChange } }) => <TagsInput value={value ?? []} onChange={onChange} />}
         />
       </div>
-      <DatePickerField<createProjectFormValue> label="ددلاین" name="deadline" control={control} />
+      <DatePickerField<CreateProjectFormValue> label="ددلاین" name="deadline" control={control} />
       <div className="mt-8">
         {isLoading ? (
           <Loading />

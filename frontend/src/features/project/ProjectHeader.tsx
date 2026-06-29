@@ -1,8 +1,8 @@
 import { HiArrowRight } from "react-icons/hi";
-import type { ownerProjectType } from "../../types/projectTypes";
+import type { OwnerProjectType } from "../../types/projectTypes";
 import useMoveBack from "../../hooks/useMoveBack";
 
-export default function ProjectHeader({ project }: { project: ownerProjectType }) {
+export default function ProjectHeader({ project }: { project: OwnerProjectType }) {
   const moveBack = useMoveBack();
   return (
     <div className="flex items-center gap-x-4 mb-8">

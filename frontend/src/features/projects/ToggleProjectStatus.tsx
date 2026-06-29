@@ -1,10 +1,10 @@
 import useToggleProjectStatus from "./useToggleProjectStatus";
 import Loading from "../../ui/Loading";
 import Toggle from "../../ui/Toggle";
-import type { ownerProjectType } from "../../types/projectTypes";
+import type { OwnerProjectType } from "../../types/projectTypes";
 
 interface ToggleProjectStatusProps {
-  project: ownerProjectType;
+  project: OwnerProjectType;
 }
 
 function ToggleProjectStatus({ project }: ToggleProjectStatusProps) {

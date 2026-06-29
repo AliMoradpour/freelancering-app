@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ownerProjectType } from "../../types/projectTypes";
+import type { OwnerProjectType } from "../../types/projectTypes";
 import Table from "../../ui/Table";
 import toLocalDate from "../../utils/toLocalDate";
 import { toPersianNumbersWithComma } from "../../utils/toPersianNumbers";
@@ -14,7 +14,7 @@ import CreateProjectForm from "./CreateProjectForm";
 import ToggleProjectStatus from "./ToggleProjectStatus";
 import { Link } from "react-router-dom";
 
-function ProjectRow({ project, index }: { project: ownerProjectType; index: number }) {
+function ProjectRow({ project, index }: { project: OwnerProjectType; index: number }) {
   const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
 

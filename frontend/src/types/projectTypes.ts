@@ -1,4 +1,6 @@
-export type ownerProjectType = {
+import type { ProposalType } from "./proposalTypes";
+
+export type OwnerProjectType = {
   _id: string;
   title: string;
   description: string;
@@ -8,10 +10,10 @@ export type ownerProjectType = {
   tags: string[];
   freelancer?: { name: string };
   status: "OPEN" | "CLOSED";
-  proposals?: object[];
+  proposals?: ProposalType[];
 };
 
-export type createProjectFormValue = {
+export type CreateProjectFormValue = {
   title: string;
   description: string;
   deadline?: Date;
@@ -20,6 +22,6 @@ export type createProjectFormValue = {
   tags: string[];
 };
 
-export type createProjectPayload = Omit<createProjectFormValue, "deadline"> & {
+export type createProjectPayload = Omit<CreateProjectFormValue, "deadline"> & {
   deadline?: string;
 };
