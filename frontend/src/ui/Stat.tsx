@@ -8,7 +8,7 @@ const colors = {
 
 type ColorKey = keyof typeof colors;
 
-export default function Stat({ icon, value, title, color }: { icon: ReactNode; value: number; title: string; color: ColorKey }) {
+export default function Stat({ icon, value, title, color }: { icon: ReactNode; value: number | string; title: string; color: ColorKey }) {
   return (
     <div className="col-span-1 grid grid-rows-2 grid-cols-[6.4rem_1fr] bg-secondary-0 p-4 rounded-lg gap-x-4">
       <div className={`row-span-2 flex items-center justify-center p-2 aspect-square rounded-full ${colors[color]}`}>{icon}</div>

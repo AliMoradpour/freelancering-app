@@ -1,4 +1,4 @@
-import { HiCollection, HiHome } from "react-icons/hi";
+import { HiCollection, HiCube, HiHome } from "react-icons/hi";
 import AppLayout from "../../ui/AppLayout";
 import CustomNavLink from "../../ui/CustomNavLink";
 import Sidebar from "../../ui/Sidebar";
@@ -19,7 +19,7 @@ export default function FreelancerLayout() {
           </CustomNavLink>
 
           <CustomNavLink link="proposals">
-            <Hi className="size-5 text-primary-900" />
+            <HiCube className="size-5 text-primary-900" />
             <span className="text-secondary-700">درخواست ها</span>
           </CustomNavLink>
         </Sidebar>

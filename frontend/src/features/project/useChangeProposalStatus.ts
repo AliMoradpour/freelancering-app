@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import changeProposalStatusApi from "../../services/proposalService";
+import { changeProposalStatusApi } from "../../services/proposalService";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 

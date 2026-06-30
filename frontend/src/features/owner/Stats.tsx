@@ -1,6 +1,6 @@
 import { HiCollection, HiCurrencyDollar, HiOutlineViewGrid } from "react-icons/hi";
 import type { OwnerProjectType } from "../../types/projectTypes";
-import Stat from "./Stat";
+import Stat from "../../ui/Stat";
 
 export default function Stats({ projects }: { projects: OwnerProjectType[] }) {
   const numOfProjects = projects.length;
