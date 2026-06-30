@@ -8,12 +8,12 @@ export default function OwnerLayout() {
     <>
       <AppLayout>
         <Sidebar>
-          <CustomNavLink link="/owner/dashboard">
+          <CustomNavLink link="dashboard">
             <HiHome className="size-5 text-primary-900" />
             <span className="text-secondary-700">داشبورد</span>
           </CustomNavLink>
 
-          <CustomNavLink link="/owner/projects">
+          <CustomNavLink link="projects">
             <HiCollection className="size-5 text-primary-900" />
             <span className="text-secondary-700">پروژه ها</span>
           </CustomNavLink>
