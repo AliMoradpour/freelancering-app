@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import TextField from "../../ui/TextField";
-import type { CreateProposalForm, CreateProposalProps } from "../../types/proposalTypes";
 import Loading from "../../ui/Loading";
+import useCreateProposal from "./useCreateProposal";
+import type { CreateProposalForm, CreateProposalProps } from "../../types/proposalTypes";
 
 export default function CreateProposal({ onClose, projectId }: CreateProposalProps) {
   const {
@@ -10,7 +11,17 @@ export default function CreateProposal({ onClose, projectId }: CreateProposalPro
     formState: { errors },
   } = useForm<CreateProposalForm>();
 
-  const onSubmit = (data: CreateProposalForm) => {};
+  const { createProposal, isCreating } = useCreateProposal();
+
+  const onSubmit = (data: CreateProposalForm) => {
+    // Spread form fields + projectId → matches CreateProposalPayload exactly
+    createProposal(
+      { ...data, projectId },
+      {
+        onSuccess: () => onClose(),
+      },
+    );
+  };
 
   return (
     <div>
@@ -51,7 +62,7 @@ export default function CreateProposal({ onClose, projectId }: CreateProposalPro
         />
 
         <div className="mt-8">
-          {false ? (
+          {isCreating ? (
             <Loading />
           ) : (
             <button type="submit" className="btn btn--primary w-full">

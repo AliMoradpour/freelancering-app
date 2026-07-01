@@ -24,7 +24,7 @@ export default function ChangeProposalStatus({ proposalId, onClose }: { proposal
 
   const onSubmit = (data: FormValue) => {
     changeProposalStatus(
-      { id: proposalId, data },
+      { proposalId, projectId, ...data},
       {
         onSuccess: () => {
           onClose();
