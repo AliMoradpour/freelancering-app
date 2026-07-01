@@ -11,7 +11,7 @@ import useEditProject from "./useEditProject";
 
 type Props = {
   onClose: () => void;
-  projectToEdit?: OwnerProjectType; // ✅ تغییر اصلی
+  projectToEdit?: OwnerProjectType;
 };
 
 function CreateProjectForm({ onClose, projectToEdit }: Props) {
@@ -101,13 +101,7 @@ function CreateProjectForm({ onClose, projectToEdit }: Props) {
         type="number"
         errors={errors}
       />
-      <RHFSelect<CreateProjectFormValue>
-        label="دسته بندی"
-        required
-        name="category"
-        register={register}
-        options={categories}
-      />
+      <RHFSelect<CreateProjectFormValue> label="دسته بندی" required name="category" register={register} options={categories} />
       <div>
         <label className="mb-2 block text-secondary-700">تگ</label>
         <Controller

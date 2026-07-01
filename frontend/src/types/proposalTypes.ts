@@ -16,3 +16,14 @@ export type ProposalType = {
   user: UserType;
   _id: string;
 };
+
+export type CreateProposalProps = {
+  onClose: () => void;
+  projectId: string;
+};
+
+export type CreateProposalForm = {
+  description: string;
+  price: number;
+  duration: number;
+};

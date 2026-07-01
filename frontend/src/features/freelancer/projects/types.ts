@@ -1,5 +1,5 @@
 export type ProjectProps = {
-  _id: number;
+  _id: string;
   title: string;
   budget: number;
   deadline: string;
