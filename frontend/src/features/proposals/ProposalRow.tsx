@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { ProposalType } from "../../types/proposalTypes";
 import Table from "../../ui/Table";
 import truncateText from "../../utils/truncateText";
